@@ -5,16 +5,22 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Heap<T> {
-    private final Comparator<T> comparator;
+    private final Comparator<? super T> comparator;
     private final List<T> nodes;
     private int size;
 
-    public Heap(Comparator<T> comparator) {
+    public Heap(Comparator<? super T> comparator) {
         this.comparator = comparator;
         this.nodes = new ArrayList<>();
         this.size = 0;
     }
 
+    /**
+     * Adds a new element. The element is added at the end of the heap. Then it is checked against his parents until the
+     * constraint is respected (ascending, descending).
+     * @param t the element to be added
+     * @implSpec T: O(log(n))
+     */
     public void add(T t) {
         // Boundary check
         if (this.nodes.size() > size) {
@@ -38,6 +44,14 @@ public class Heap<T> {
         size++;
     }
 
+
+    /**
+     * Removes the element on top (the highest priority). Then the element from the end of the heap is moved on the first
+     * position then it is checked against his highest priority child until the constraint is respected (ascending,
+     * descending).
+     * @implSpec T: O(log(n))
+     * @return the highest priority element
+     */
     public T remove() {
         if (size == 0) {
             throw new IllegalStateException("The heap is empty");

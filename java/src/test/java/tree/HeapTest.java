@@ -10,7 +10,7 @@ class HeapTest {
     @Test
     void add_minHeap() {
         // Arrange
-        Heap<Integer> heap = new Heap<Integer>(Comparator.naturalOrder());
+        Heap<Integer> heap = new Heap<>(Comparator.naturalOrder());
 
         // Act
         heap.add(1);
@@ -24,7 +24,7 @@ class HeapTest {
     @Test
     void add_maxHeap() {
         // Arrange
-        Heap<Integer> heap = new Heap<Integer>(Comparator.reverseOrder());
+        Heap<Integer> heap = new Heap<>(Comparator.reverseOrder());
 
         // Act
         heap.add(1);
@@ -38,7 +38,7 @@ class HeapTest {
     @Test
     void remove_minHeap() {
         // Arrange
-        Heap<Integer> heap = new Heap<Integer>(Comparator.naturalOrder());
+        Heap<Integer> heap = new Heap<>(Comparator.naturalOrder());
 
         // Act
         heap.add(1);
@@ -53,7 +53,7 @@ class HeapTest {
     @Test
     void remove_maxHeap() {
         // Arrange
-        Heap<Integer> heap = new Heap<Integer>(Comparator.reverseOrder());
+        Heap<Integer> heap = new Heap<>(Comparator.reverseOrder());
 
         // Act
         heap.add(1);
@@ -68,7 +68,7 @@ class HeapTest {
     @Test
     void isEmpty_true() {
         // Arrange
-        Heap<Integer> heap = new Heap<Integer>(Comparator.reverseOrder());
+        Heap<Integer> heap = new Heap<>(Comparator.reverseOrder());
 
         // Act
 
@@ -79,7 +79,7 @@ class HeapTest {
     @Test
     void isEmpty_false() {
         // Arrange
-        Heap<Integer> heap = new Heap<Integer>(Comparator.reverseOrder());
+        Heap<Integer> heap = new Heap<>(Comparator.reverseOrder());
 
         // Act
         heap.add(1);
@@ -91,8 +91,32 @@ class HeapTest {
     @Test
     void stress_minHeap() {
         // Arrange
-        Heap<Integer> heap = new Heap<Integer>(Comparator.naturalOrder());
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.naturalOrder());
+        Heap<Integer> heap = new Heap<>(Comparator.naturalOrder());
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+        Random random = new Random();
+        int[] numbers = random.ints(10000, 10, 10000).toArray();
+
+        // Act & Assert
+        for (int number : numbers) {
+            heap.add(number);
+            pq.add(number);
+
+            Assertions.assertEquals(heap.top(), pq.peek());
+        }
+
+        Assertions.assertArrayEquals(pq.toArray(), heap.toArray());
+
+        while (!heap.isEmpty()) {
+            Assertions.assertEquals(pq.poll(), heap.remove());
+        }
+    }
+
+    @Test
+    void stress_maxHeap() {
+        // Arrange
+        Heap<Integer> heap = new Heap<>(Comparator.reverseOrder());
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
 
         Random random = new Random();
         int[] numbers = random.ints(10000, 10, 10000).toArray();
