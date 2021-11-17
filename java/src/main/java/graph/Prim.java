@@ -2,6 +2,12 @@ package graph;
 
 import java.util.*;
 
+/**
+ * Prim Minimum Cost Spanning Tree
+ * ----------------------------------
+ * Sources:
+ * https://www.youtube.com/watch?v=4ZlRH0eK-qQ
+ */
 public class Prim {
 
     public static class Result {

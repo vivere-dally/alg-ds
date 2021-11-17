@@ -5,6 +5,7 @@ import java.util.*;
 /**
  * Kruskal Minimum Cost Spanning Tree
  * ----------------------------------
+ * Sources:
  * https://www.youtube.com/watch?v=4ZlRH0eK-qQ
  */
 public class Kruskal  {
